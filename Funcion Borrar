@@ -1,0 +1,76 @@
+int arbol::borrar(int a){
+   nodo *p;
+   
+   buscar(a);
+   if(ENCONTRADO == NO) return(0);
+   
+   if(donde != NULL){
+      if(COMO == H_DER){
+         p = donde->h_der;
+      }else{
+         p = donde->h_izq;
+      }
+      if(p->h_der != NULL && p->h_izq != NULL){
+         intercambiar(p,p->anterior);
+      }
+      borrar2(p);
+      
+      // ---- Quitar de la lista doble ----
+      
+      if(p->anterior == NULL){
+         principio = p->siguiente;
+      }else{
+         (p->anterior)->siguiente = p->siguiente;
+      }
+      if(p->siguiente == NULL){
+         final = p->anterior;
+      }else{
+         (p->siguiente)->anterior = p->anterior;
+      }
+      free(p);
+      return(1);
+   }
+}
+
+int arbol::borrar2(nodo *p){
+   if(donde == NULL){
+      if(p->h_der == NULL && p->h_izq == NULL){
+         raiz = NULL;
+         return(1);
+      }
+      if(p->h_der != NULL && p->h_izq == NULL){
+         raiz = p->h_der;
+         return(1);
+      }else{ // Cuando h_izq != NULL && h_der == NULL
+         raiz = p->h_izq;
+         return(1);
+      }
+   }
+   
+   if(p->h_der == NULL && p->h_izq == NULL){
+      if(donde->h_der == p){
+         donde->h_der = NULL;
+      }else{
+         donde->h_izq = NULL;
+      }
+      return(1);
+   }
+   
+   if(p->h_der != NULL && p->h_izq == NULL){
+      if(donde->h_der == p){
+         donde->h_der = p->h_der;
+      }else{
+         donde->h_der = p->h_der;
+      }
+      return(1);
+   }
+   
+   if(p->h_der == NULL && p->h_izq != NULL){
+      if(donde->h_der == p){
+         donde->h_der = p->h_izq;
+      }else{
+         donde->h_izq = p->h_izq;
+      }
+      return(1);
+   }
+}

@@ -1,0 +1,41 @@
+void arbol::buscar(int a){
+   nodo *p;
+   p = raiz;
+   donde = NULL;
+   COMO = H_DER;
+   
+   if(p == NULL){
+      ENCONTRADO = NO;
+      donde = NULL;
+      return;
+   }
+   
+   while(p){
+      if(p->valor == a){
+         ENCONTRADO = SI;
+         return;
+      }else if(p->valor < a){
+         if(p->h_der == NULL){
+            ENCONTRADO = NO;
+            donde = p;
+            COMO = H_DER;
+            return;
+         }else{
+            donde = p;
+            COMO = H_DER;
+            p = p->h_der;
+         }
+      }else{ //p->valor > a
+         if(p->h_izq == NULL){
+            ENCONTRADO = NO;
+            donde = p;
+            COMO = H_IZQ;
+            return;
+         }else{
+            donde = p;
+            COMO = H_IZQ;
+            p = p->h_izq;
+         }
+      }
+   }   
+}

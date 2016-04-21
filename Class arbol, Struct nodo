@@ -1,0 +1,52 @@
+#include <iostream>
+#include <cstdlib>
+#include <fstream>
+
+using namespace std;
+
+//------------------------------------------------------------------------
+//------------------------- Estructura Nodos -----------------------------
+//------------------------------------------------------------------------
+struct nodo{
+	nodo *padre, *anterior, *siguiente, *h_der, *h_izq;
+	int valor; 
+	/* data */
+};
+
+class arbol{
+	nodo *raiz, *principio, *final;
+	nodo *donde;
+	enum encontrado {SI = 1,NO} ENCONTRADO;
+	enum como {VACIO = 0, H_DER, H_IZQ} COMO;
+public:
+	arbol(); // listo
+	~arbol(); // listo
+	void buscar(int a); // listo
+	int agregar(int a); // listo
+	void pintar(); // falta EZ
+	void intercambiar(nodo *p, nodo *q); // listo 
+	int borrar(int a); // listo
+	int borrar2(nodo *p); // listo
+};
+//---------------------------------------------------------------------
+//---------------------------Constructor-------------------------------
+//---------------------------------------------------------------------
+arbol::arbol(){
+   raiz = NULL;
+   principio = NULL;
+   final = NULL;
+   donde = NULL;
+   ENCONTRADO = NO;
+   COMO = VACIO;
+}
+//---------------------------------------------------------------------
+//----------------------------Destructor-------------------------------
+//---------------------------------------------------------------------
+arbol::~arbol(){
+   raiz = NULL;
+   principio = NULL;
+   final = NULL;
+   donde = NULL;
+   ENCONTRADO = NO;
+   COMO = VACIO;
+}

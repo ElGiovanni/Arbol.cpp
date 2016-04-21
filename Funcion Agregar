@@ -1,0 +1,57 @@
+int arbol::agregar(int a){
+   nodo *p;
+   
+   buscar(a);
+   
+   if(ENCONTRADO == SI) return(0);
+   
+   p = (nodo *)malloc(sizeof(nodo));
+   p->valor = a;
+   
+   if(COMO == VACIO){
+      raiz = p; //apuntador del arbol
+      principio = p; //apuntador del arbol
+      final = p; //apuntador del arbol
+      p->padre = NULL; //apuntador del arbol
+      p->h_der = NULL; //apuntador del arbol
+      p->h_izq = NULL; //apuntador del arbol
+      p->anterior = NULL; //apuntador de la lista
+      p->siguiente = NULL; //apuntador de la lista
+   }else if (COMO == H_DER){
+      donde->h_der = p;
+      p->padre = donde;
+      p->h_der = NULL;
+      p->h_izq = NULL;
+      if(donde->siguiente == NULL){
+         donde->siguiente = p;
+         p->siguiente = NULL;
+         final = p;
+         p->anterior = donde;
+         return(1);
+      }else{
+         p->siguiente = donde->siguiente;
+         (p->siguiente)->anterior = p;
+         donde->siguiente = p;
+         p->anterior = donde;
+         return(1);
+      }
+   }else{ //COMO == H_IZQ
+      donde->h_izq = p;
+      p->padre = donde;
+      p->h_der = NULL;
+      p->h_izq = NULL;
+      if(donde->anterior == NULL){
+         donde->anterior = p;
+         p->anterior = NULL;
+         principio = p;
+         p->siguiente = donde;
+         return(1);
+      }else{
+         p->anterior = donde->anterior;
+         (p->anterior)->siguiente = p;
+         donde->anterior = p;
+         p->siguiente = donde;
+         return(1);
+      }
+   }
+}

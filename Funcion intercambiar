@@ -1,0 +1,198 @@
+void arbol::intercambiar(nodo *p, nodo *q){
+   nodo *r;
+   
+   //---------Cuando los nodos estan juntos---------
+   if(p->padre == q){
+      if(q->h_der == p){
+         //---Modificar los padres---
+         p->padre = q->padre;
+         q->padre = p;
+         //---Modificar hijo izquierdo---
+         r = q->h_izq;
+         q->h_izq = p->h_izq;
+         p->h_izq = r;
+         //---Modificar hijo derecho---
+         r = p->h_der;
+         p->h_der = q;
+         q->h_der = r;
+         
+         //---Modificar los vecinos de P---
+         if(p->padre == NULL){
+            raiz = p;
+         }else{
+            if((p->padre)->h_der == q){
+               (p->padre)->h_der = p;
+            }else{
+               (p->padre)->h_izq = p;
+            }
+         }
+         if(p->h_izq != NULL){
+            (p->h_izq)->padre = p;
+         }
+         //---Modificar los vecinos de Q---
+         if(q->h_der != NULL){
+            (q->h_der)->padre = q;
+         }
+         if(q->h_izq != NULL){
+            (q->h_izq)->padre = q;
+         }
+      }else{
+         // --------------- El analogo cuando q->h_izq = p ----------------
+         
+         //---Modificar los padres---
+         p->padre = q->padre;
+         q->padre = p;
+         //---Modificar hijo izquierdo---
+         r = q->h_der;
+         q->h_der = p->h_der;
+         p->h_der = r;
+         //---Modificar hijo derecho---
+         r = p->h_izq;
+         p->h_izq = q;
+         q->h_izq = r;
+         
+         //---Modificar los vecinos de P---
+         if(p->padre == NULL){
+            raiz = p;
+         }else{
+            if((p->padre)->h_izq == q){
+               (p->padre)->h_izq = p;
+            }else{
+               (p->padre)->h_der = p;
+            }
+         }
+         if(p->h_der != NULL){
+            (p->h_der)->padre = p;
+         }
+         //---Modificar los vecinos de Q---
+         if(q->h_izq != NULL){
+            (q->h_izq)->padre = q;
+         }
+         if(q->h_der != NULL){
+            (q->h_der)->padre = q;
+         }
+      }
+   }else if(q->padre == p){
+      if(p->h_der == q){
+         //---Modificar los padres---
+         q->padre = p->padre;
+         q->padre = q;
+         //---Modificar hijo izquierdo---
+         r = p->h_izq;
+         p->h_izq = q->h_izq;
+         q->h_izq = r;
+         //---Modificar hijo derecho---
+         r = q->h_der;
+         q->h_der = q;
+         p->h_der = r;
+         
+         //---Modificar los vecinos de Q---
+         if(q->padre == NULL){
+            raiz = q;
+         }else{
+            if((q->padre)->h_der == p){
+               (q->padre)->h_der = q;
+            }else{
+               (q->padre)->h_izq = q;
+            }
+         }
+         if(q->h_izq != NULL){
+            (q->h_izq)->padre = q;
+         }
+         //---Modificar los vecinos de P---
+         if(p->h_der != NULL){
+            (p->h_der)->padre = p;
+         }
+         if(p->h_izq != NULL){
+            (p->h_izq)->padre = p;
+         }
+      }else{
+         // --------------- El analogo cuando p->h_izq = q ----------------
+         
+         //---Modificar los padres---
+         q->padre = p->padre;
+         p->padre = q;
+         //---Modificar hijo izquierdo---
+         r = p->h_der;
+         p->h_der = q->h_der;
+         q->h_der = r;
+         //---Modificar hijo derecho---
+         r = q->h_izq;
+         q->h_izq = p;
+         p->h_izq = r;
+         
+         //---Modificar los vecinos de P---
+         if(q->padre == NULL){
+            raiz = q;
+         }else{
+            if((q->padre)->h_izq == p){
+               (q->padre)->h_izq = q;
+            }else{
+               (q->padre)->h_der = q;
+            }
+         }
+         if(q->h_der != NULL){
+            (q->h_der)->padre = q;
+         }
+         //---Modificar los vecinos de Q---
+         if(p->h_izq != NULL){
+            (p->h_izq)->padre = p;
+         }
+         if(p->h_der != NULL){
+            (p->h_der)->padre = p;
+         }
+      }
+   }else{// ---------------------Cuando los nodos estan separados-------------------------
+      //---Cambiar los padres---
+      r = p->padre;
+      p->padre = q->padre;
+      q->padre = r;
+      //---Cambiar los hijos derechos---
+      r = p->h_der;
+      p->h_der = q->h_der;
+      q->h_der = r;
+      //---Cambiar los hijos izquierdos---
+      r = p->h_izq;
+      p->h_izq = q->h_izq;
+      q->h_izq = r;
+      
+      //--------Modificar P--------
+      
+      //---Cambiar los vecinos---
+      if(p->padre == NULL){ //Si su padre es la raiz
+         raiz = p;
+      }else{
+         if((p->padre)->h_der == q){ //Si cuelga de la derecha del padre
+            (p->padre)->h_der = p;
+         }else{                      //Si cuelga de la izquierda del padre
+            (p->padre)->h_izq = p;
+         }
+      }
+      //---Redireccionar los hijos al nuevo padre---
+      if(p->h_der != NULL){
+         (p->h_der)->padre = p;
+      }
+      if(p->h_izq != NULL){
+         (p->h_izq)->padre = p;
+      }
+      
+      //--------Modificar Q--------
+      
+      if(q->padre == NULL){ //Si su padre es la raiz
+         raiz = p;
+      }else{
+         if((q->padre)->h_der == p){ //Si cuelga de la derecha del padre
+            (q->padre)->h_der = q;
+         }else{                      //Si cuelga de la izquierda del padre
+            (q->padre)->h_izq = q;
+         }
+      }
+      //---Redireccionar los hijos al nuevo padre---
+      if(q->h_der != NULL){
+         (q->h_der)->padre = q;
+      }
+      if(q->h_izq != NULL){
+         (q->h_izq)->padre = q;
+      }
+   }
+}
